@@ -20,7 +20,7 @@ bash Openshift-EE/utils/e2e-cr jobname:volume-replica-distribution jobphase:Wait
 bash Openshift-EE/utils/e2e-cr jobname:volume-replica-distribution jobphase:Running init_time:"$current_time"
 
 # Removing test_id from e2e-result.yml spec for simple mode
-sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
+#sed -i "s/-<job_id>/ /g" Openshift-EE/utils/result-volume-replica-distribution.yml
 
 kubectl apply -f Openshift-EE/utils/result-volume-replica-distribution.yml
 
