@@ -12,11 +12,11 @@ jobNameCmd="kubectl get jobs -n litmus --no-headers -o jsonpath='{.items[?(@.met
 job_deploy_out=$(kubectl create -f ${litmus_job_file}) && \
 job_name=$(eval ${jobNameCmd}); retcode=$?
 
-while [ -z $job_name ]; do
+while [ -z "$job_name" ]; do
   sleep 5
   job_name=$(eval ${jobNameCmd});
 done
-
+chmod 755 ../Openshift-EE/utils/error_handler
 bash ../Openshift-EE/utils/error_handler ${retcode} msg="Unable to run litmusbook, exiting" action="exit"
 
 ## Obtain the litmus pod name 
