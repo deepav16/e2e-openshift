@@ -10,6 +10,8 @@ stages:
 PCZD-OpenShift-3.10:
   image: openebs/openshift-ci:latest
   stage: CLUSTER-SETUP
+  tags:
+    - create-cluster
   script:     
     - chmod 755 ./Openshift-EE/pipelines/OpenEBS-base/stages/1-cluster-setup/PCZD-cluster-setup/cluster-state
     - ./Openshift-EE/pipelines/OpenEBS-base/stages/1-cluster-setup/PCZD-cluster-setup/cluster-state
