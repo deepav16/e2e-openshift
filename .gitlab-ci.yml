@@ -21,23 +21,24 @@ K9YC-v0.8.1:
     - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/K9YC-openebs-depoy/deploy-openebs
     - ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/K9YC-openebs-depoy/deploy-openebs
 
-      #1CXH-POLICIES:
-      #  image: openebs/openshift-ci:latest
-      #  stage: OPENEBS-SETUP
-      #  script:
-      #    - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/1CXH-storage-policies/openebs-sc
-      #    - ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/1CXH-storage-policies/openebs-sc
+1CXH-POLICIES:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/1CXH-storage-policies/openebs-sc
+    - ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/1CXH-storage-policies/openebs-sc
   
-      #HC5P-CSTOR-POOL:
-      #  image: openebs/openshift-ci:latest
-      #  stage: OPENEBS-SETUP
-      #  script:
-      #    - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/HC5P-create-striped-pool/create-pool
-      #    - ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/HC5P-create-striped-pool/create-pool
+HC5P-CSTOR-POOL:
+  image: openebs/openshift-ci:latest
+  stage: OPENEBS-SETUP
+  script:
+    - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/HC5P-create-striped-pool/create-pool
+    - ./Openshift-EE/pipelines/OpenEBS-base/stages/2-setup/HC5P-create-striped-pool/create-pool
     
 .func_test_template:
   image: openebs/openshift-ci:latest
   stage: FUNCTIONAL
+  when: always
   dependencies:
     - K9YC-v0.8.1
      
