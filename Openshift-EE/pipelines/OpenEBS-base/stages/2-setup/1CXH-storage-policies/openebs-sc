@@ -16,7 +16,7 @@ echo $present_dir
 # Removing test_id from e2e-result.yml spec for simple mode
 sed -i "s/-<job_id>/ /g" Openshift-EE/utils/e2e-result.yml
 
-#pooling over previous job to complete
+###pooling over previous job to complete
 echo "***********Applying openebs-storage-clas********"
 bash Openshift-EE/utils/pooling jobname:s2-j2-cstor-pool
 bash Openshift-EE/utils/e2e-cr jobname:s2-j3-policies jobphase:Running init_time:"$current_time"
