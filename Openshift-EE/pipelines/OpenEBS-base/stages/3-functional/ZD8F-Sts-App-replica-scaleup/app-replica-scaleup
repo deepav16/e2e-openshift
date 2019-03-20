@@ -5,8 +5,8 @@ pod() {
 echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloning e2e-openshift repo*************"
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip 'cd e2e-openshift && git checkout OpenEBS-base && bash Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/ZD8F-Sts-App-replica-scaleup/app-replica-scaleup node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'git clone https://github.com/openebs/e2e-openshift.git'
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'cd e2e-openshift && git checkout test && bash Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/ZD8F-Sts-App-replica-scaleup/app-replica-scaleup node '"'$CI_JOB_ID'"''
 }
 
 node() {
@@ -29,10 +29,11 @@ test_name=$(bash Openshift-EE/utils/generate_test_name testcase=litmus-busybox-d
 echo $test_name
 cd litmus
 echo "Running the litmus test for Busybox Deployment.."
-run_test=litmus/apps/busybox/deployers/run_litmus_test.yml
+run_test=apps/busybox/deployers/run_litmus_test.yml
 cat $run_test
-cd ..
+
 bash Openshift-EE/utils/litmus_job_runner label='app:busybox-litmus' job=$run_test
+cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name
 if [ "$?" != "0" ]; then
@@ -46,12 +47,12 @@ echo $test_name
 cd litmus
 sed -i -e 's/app: cassandra-scaleup-litmus/app: busybox-scaleup-litmus/g' \
 -e 's/value: 'app=cassandra'/value: 'app=busybox-sts'/g' \
--e 's/value: app-cass-ns/value: app-busybox-ns/g' /apps/cassandra/functional/scale_replicas/run_litmus_test
+-e 's/value: app-cass-ns/value: app-busybox-ns/g' /apps/cassandra/functional/scale_replicas/run_litmus_test.yml
 echo "Running the litmus test for Busybox Deployment Scaleup.."
-run_test=litmus/apps/cassandra/functional/scale_replicas/run_litmus_test.yml
+run_test=apps/cassandra/functional/scale_replicas/run_litmus_test.yml
 cat $run_test
-cd ..
 bash Openshift-EE/utils/litmus_job_runner label='app:busybox-scaleup-litmus' job=$run_test
+cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name
 if [ "$?" != "0" ]; then
@@ -67,10 +68,10 @@ sed -i -e 's/generateName: litmus-busybox-deploy/generateName: litmus-busybox-de
 -e 's/app: busybox-litmus/app: busybox-deprovision-litmus/g' \
 -e 's/value: provision/value: deprovision/g' apps/busybox/deployers/run_litmus_test.yml
 echo "Running the litmus test for Busybox Deployment Scaleup.."
-run_test=litmus/apps/busybox/deployers/run_litmus_test.yml
+run_test=apps/busybox/deployers/run_litmus_test.yml
 cat $run_test
-cd ..
 bash Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision-litmus' job=$run_test
+cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name
 
