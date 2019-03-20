@@ -50,12 +50,6 @@ OBS2-Memory-Usage:
     - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/OBS2-Memory-Consumption/memory-consumption
     - ./Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/OBS2-Memory-Consumption/memory-consumption
 
-29O5-Fill-Volume:
-  extends: .func_test_template
-  script: 
-    - chmod 775 ./Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/29O5-Volume-Capacity/volume-capacity
-    - ./Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/29O5-Volume-Capacity/volume-capacity
-
 GP95-openebs-Uninstall:
   image: openebs/openshift-ci:latest
   stage: CLEANUP

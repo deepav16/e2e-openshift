@@ -32,7 +32,7 @@ echo "Running the litmus test for Busybox Deployment.."
 run_test=apps/busybox/deployers/run_litmus_test.yml
 cat $run_test
 
-bash Openshift-EE/utils/litmus_job_runner label='app:busybox-litmus' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-litmus' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name
@@ -51,7 +51,7 @@ sed -i -e 's/app: cassandra-scaleup-litmus/app: busybox-scaleup-litmus/g' \
 echo "Running the litmus test for Busybox Deployment Scaleup.."
 run_test=apps/cassandra/functional/scale_replicas/run_litmus_test.yml
 cat $run_test
-bash Openshift-EE/utils/litmus_job_runner label='app:busybox-scaleup-litmus' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-scaleup-litmus' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name
@@ -70,7 +70,7 @@ sed -i -e 's/generateName: litmus-busybox-deploy/generateName: litmus-busybox-de
 echo "Running the litmus test for Busybox Deployment Scaleup.."
 run_test=apps/busybox/deployers/run_litmus_test.yml
 cat $run_test
-bash Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision-litmus' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision-litmus' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:app-replica-scaleup $test_name

@@ -29,12 +29,12 @@ test_name=$(bash Openshift-EE/utils/generate_test_name testcase=fio-data-integri
 echo $test_name
 cd litmus
 echo "Running the litmus test for Busybox Deployment.."
-run_test=fio/tests/data-integrity/run_litmus_test.yml
+run_test=apps/fio/tests/data-integrity/run_litmus_test.yml
 sed -i -e 's/value: openebs-standard/value: openebs-cstor-sparse/g' $run_test
 
 cat $run_test
 
-bash Openshift-EE/utils/litmus_job_runner label='app:fio-di-litmus' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:fio-di-litmus' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:data-integrity $test_name

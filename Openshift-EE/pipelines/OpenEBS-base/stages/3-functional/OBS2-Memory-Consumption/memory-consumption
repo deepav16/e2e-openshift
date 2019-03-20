@@ -6,7 +6,7 @@ echo $CI_JOB_ID
 ###clone e2e-openshift-repo
 echo "cloning e2e-openshift repo*************"
 sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'git clone https://github.com/openebs/e2e-openshift.git'
-sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'cd e2e-openshift && git checkout test && bash Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/OBS2-Memory-Consumption/OBS2-Memory-Consumption node '"'$CI_JOB_ID'"''
+sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$ip -p 1658 'cd e2e-openshift && git checkout test && bash Openshift-EE/pipelines/OpenEBS-base/stages/3-functional/OBS2-Memory-Consumption/memory-consumption node '"'$CI_JOB_ID'"''
 }
 
 node() {
@@ -36,7 +36,7 @@ sed -i -e 's/app: busybox-litmus/app: deploy-busybox-litmus/g' \
 -e 's/value: app-busybox-ns/value: mem-busybox/g' $run_test
 cat $run_test
 
-bash Openshift-EE/utils/litmus_job_runner label='app:deploy-busybox-litmus' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:deploy-busybox-litmus' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:memory-consumption $test_name
@@ -55,7 +55,7 @@ sed -i -e 's/value: 'app=busybox-sts'/value: 'app=busybox-mem'/g' \
 echo "Running the litmus test for Busybox Deployment Scaleup.."
 run_test=/apps/prometheus/functional/memcheck/run_litmus_test.yml
 cat $run_test
-bash Openshift-EE/utils/litmus_job_runner label='app:memcheck-cstor-test' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:memcheck-cstor-test' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:memory-consumption $test_name
@@ -79,7 +79,7 @@ echo "Running the litmus test for Busybox Deployment Scaleup.."
 run_test=apps/busybox/deployers/run_litmus_test.yml
 cat $run_test
 
-bash Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision' job=$run_test
+bash ../Openshift-EE/utils/litmus_job_runner label='app:busybox-deprovision' job=$run_test
 cd ..
 bash Openshift-EE/utils/dump_cluster_state;
 bash Openshift-EE/utils/event_updater jobname:memory-consumption $test_name
